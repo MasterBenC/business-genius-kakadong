@@ -1,0 +1,38 @@
+[
+  {
+    "id": "idea-service-001",
+    "stage": "idea",
+    "model": "service",
+    "expected_verdict": "validate-first",
+    "evidence_profile": "buyer_and_payment_path_unverified",
+    "input_facts": {"product": "AI customer-service knowledge base", "buyer": "not specific", "price": "9900 RMB planned", "transactions": 0},
+    "expected_assertions": {"verdict": "validate-first", "evidence_labels_include": ["to-validate"], "requires_seven_day_action": true}
+  },
+  {
+    "id": "idea-product-001",
+    "stage": "idea",
+    "model": "product",
+    "expected_verdict": "pause",
+    "evidence_profile": "concept_without_buyer_or_payment_path",
+    "input_facts": {"product": "AI efficiency platform", "buyer": "everyone", "price": null, "transactions": 0},
+    "expected_assertions": {"verdict": "pause", "evidence_labels_include": ["to-validate"], "requires_seven_day_action": true}
+  },
+  {
+    "id": "operating-service-001",
+    "stage": "operating",
+    "model": "service",
+    "expected_verdict": "adjust-and-continue",
+    "evidence_profile": "paid_but_founder_delivery_bottleneck",
+    "input_facts": {"product": "AI-assisted tax document service", "buyer": "small businesses", "price": 3000, "transactions": 8, "repeat_or_retention": 0},
+    "expected_assertions": {"verdict": "adjust-and-continue", "evidence_labels_include": ["occurred", "to-validate"], "requires_seven_day_action": true}
+  },
+  {
+    "id": "operating-product-001",
+    "stage": "operating",
+    "model": "product",
+    "expected_verdict": "continue",
+    "evidence_profile": "repeat_usage_and_unit_economics_present",
+    "input_facts": {"product": "AI quote review tool", "buyer": "small B2B sales teams", "price": 199, "active_seats": 15, "api_cost_per_active_seat": 35},
+    "expected_assertions": {"verdict": "continue", "evidence_labels_include": ["occurred", "material"], "requires_seven_day_action": true}
+  }
+]
