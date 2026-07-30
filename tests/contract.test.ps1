@@ -6,6 +6,11 @@ $skillPath = Join-Path $root 'skills/business-genius-kakadong/SKILL.md'
 $readmePath = Join-Path $root 'skills/business-genius-kakadong/README.md'
 $casesPath = Join-Path $root 'skills/business-genius-kakadong/evals/cases.json'
 $safetyCasesPath = Join-Path $root 'skills/business-genius-kakadong/evals/safety-cases.json'
+$personaPath = Join-Path $root 'skills/business-genius-kakadong/references/persona.md'
+$bpReferencePath = Join-Path $root 'skills/business-genius-kakadong/references/investor-bp.md'
+$bpCasesPath = Join-Path $root 'skills/business-genius-kakadong/evals/bp-cases.json'
+$bpExamplePath = Join-Path $root 'skills/business-genius-kakadong/examples/investor-bp-operating.md'
+$rootReadmePath = Join-Path $root 'README.md'
 
 function Assert-True {
     param(
@@ -37,6 +42,64 @@ $skill = Get-Content -Raw -Encoding UTF8 $skillPath
 $readme = Get-Content -Raw -Encoding UTF8 $readmePath
 $cases = Get-Content -Raw -Encoding UTF8 $casesPath | ConvertFrom-Json
 $safetyCases = Get-Content -Raw -Encoding UTF8 $safetyCasesPath | ConvertFrom-Json
+
+Assert-True (Test-Path -LiteralPath $personaPath) 'Persona reference must exist.'
+
+$persona = Get-Content -Raw -Encoding UTF8 $personaPath
+foreach ($term in @(
+    'commercial-assessment',
+    'investor-bp',
+    'kakadong-persona',
+    'agent-voice',
+    'artifact-voice'
+)) {
+    Assert-Contains ($skill + $persona) $term "Skill and persona contract must contain '$term'."
+}
+Assert-Contains $persona 'professional-but-warm' 'Persona must be professional but warm.'
+Assert-Contains $persona 'one-question-at-a-time' 'Persona must ask one question at a time.'
+Assert-Contains $persona 'no-empty-encouragement' 'Persona must forbid empty encouragement.'
+
+Assert-True (Test-Path -LiteralPath $bpReferencePath) 'Investor BP reference must exist.'
+Assert-True (Test-Path -LiteralPath $bpCasesPath) 'Investor BP cases must exist.'
+Assert-True (Test-Path -LiteralPath $bpExamplePath) 'Investor BP example must exist.'
+
+$bp = Get-Content -Raw -Encoding UTF8 $bpReferencePath
+$bpCases = Get-Content -Raw -Encoding UTF8 $bpCasesPath | ConvertFrom-Json
+$rootReadme = Get-Content -Raw -Encoding UTF8 $rootReadmePath
+
+foreach ($term in @(
+    'InvestorBPInput',
+    'InvestorSummary',
+    'SlideBrief',
+    'user-supplied-data-only',
+    'no-automatic-web-research',
+    'angel-lens',
+    'institution-lens',
+    'validation-version',
+    'gap-only'
+)) {
+    Assert-Contains $bp $term "Investor BP contract must contain '$term'."
+}
+
+Assert-True ($bpCases.Count -eq 6) 'Investor BP evaluations must contain six cases.'
+$requiredKinds = @('full-bp','validation-bp','gap-only','missing-source','data-conflict','safety-refusal')
+foreach ($kind in $requiredKinds) {
+    Assert-True (($bpCases.kind | Sort-Object -Unique) -contains $kind) "Investor BP evaluation kind '$kind' is required."
+}
+foreach ($case in $bpCases) {
+    Assert-True ($null -ne $case.input_facts) "BP case $($case.id) must include input facts."
+    Assert-True ($null -ne $case.expected_assertions) "BP case $($case.id) must include expected assertions."
+}
+
+foreach ($term in @(
+    'investor-bp',
+    '12-slide',
+    'user-supplied-data-only',
+    'no-PPTX-generation',
+    'kakadong-persona'
+)) {
+    Assert-Contains ($rootReadme + $readme) $term "Public docs must contain '$term'."
+}
 
 foreach ($term in @(
     'business-genius-kakadong',

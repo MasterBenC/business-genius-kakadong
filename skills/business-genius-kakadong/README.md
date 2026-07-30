@@ -10,12 +10,29 @@
 - 未启动想法与已有真实交易
 - 服务型 OPC 与产品型 OPC
 - 输出可继续、调整后继续、先验证或暂缓，以及未来 7 天的一项行动
+- `investor-bp`：一页投资摘要与 `12-slide` 融资 BP Brief
 
 它不输出总分，不替用户填补缺失事实，也不提供法律、税务、融资审批或投资回报保证。
+
+## 投资人 BP 边界
+
+- `user-supplied-data-only`：市场、竞品、财务、客户、收入和融资数据由用户提供，并保留来源、口径和日期。
+- 缺失数据逐项问询；仍无法确认时标记为待补，不自动联网补数。
+- 可继续/调整后继续可生成正式材料，先验证只生成验证版，暂缓只输出材料缺口。
+- 卡卡东的 `kakadong-persona` 用于问询和纠错；正式 BP 使用克制的投资人语言。
+- `no-PPTX-generation`：第一版不生成 HTML、PDF 或 PPTX。
+- Dashi PPT 不集成、不复制、不捆绑，也不是本 Skill 的依赖。
 
 ## 使用方式
 
 将 `skills/business-genius-kakadong` 安装到支持 Skills 的 Agent 中，调用 `business-genius-kakadong`，然后描述你的产品、买家、价格和当前阶段。
+
+投资人 BP 示例：
+
+```text
+business-genius-kakadong
+我想整理一份给天使和机构投资人看的融资 BP。
+```
 
 ## 隐私
 
@@ -29,4 +46,6 @@
 
 - `SKILL.md`：完整工作流、判断规则和报告模板
 - `examples/`：四条分支的脱敏输入与输出示例
-- `evals/cases.json`：四条分支的契约评测数据
+- `evals/cases.json`：四条体检分支的契约评测数据
+- `evals/bp-cases.json`：六类投资人 BP 行为评测
+- `references/`：人格与投资人 BP 工作流
