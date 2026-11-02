@@ -8,9 +8,11 @@ $casesPath = Join-Path $root 'skills/business-genius-kakadong/evals/cases.json'
 $safetyCasesPath = Join-Path $root 'skills/business-genius-kakadong/evals/safety-cases.json'
 $personaPath = Join-Path $root 'skills/business-genius-kakadong/references/persona.md'
 $bpReferencePath = Join-Path $root 'skills/business-genius-kakadong/references/investor-bp.md'
+$kbMountPath = Join-Path $root 'skills/business-genius-kakadong/references/kb-mount.md'
 $bpCasesPath = Join-Path $root 'skills/business-genius-kakadong/evals/bp-cases.json'
 $bpExamplePath = Join-Path $root 'skills/business-genius-kakadong/examples/investor-bp-operating.md'
 $rootReadmePath = Join-Path $root 'README.md'
+$changelogPath = Join-Path $root 'CHANGELOG.md'
 
 function Assert-True {
     param(
@@ -144,5 +146,29 @@ foreach ($case in $safetyCases) {
 
 Assert-Contains $readme 'public-free' 'README must state the public free distribution scope.'
 Assert-Contains $readme 'non-commercial' 'README must state the current non-commercial boundary.'
+
+Assert-True (Test-Path -LiteralPath $kbMountPath) 'kb-mount.md must exist.'
+Assert-True (Test-Path -LiteralPath $changelogPath) 'CHANGELOG.md must exist.'
+$kbMount = Get-Content -Raw -Encoding UTF8 $kbMountPath
+$changelog = Get-Content -Raw -Encoding UTF8 $changelogPath
+foreach ($term in @(
+    'miit-qualification-kb',
+    'MIIT_QUALIFICATION_KB_ROOT',
+    '高新技术企业',
+    '专精特新',
+    'needs_verification',
+    'PENDING',
+    '03-企业主体库',
+    'Do not invent'
+)) {
+    Assert-Contains $kbMount $term "kb-mount.md must contain '$term'."
+}
+Assert-Contains $skill 'references/kb-mount.md' 'SKILL.md must point at kb-mount.md.'
+Assert-Contains $skill 'miit-qualification-kb' 'SKILL.md must name miit-qualification-kb.'
+Assert-Contains $bp 'kb-mount.md' 'Investor BP workflow must reference kb-mount for qualification claims.'
+Assert-Contains ($rootReadme + $readme) 'miit-qualification-kb' 'Public docs must mention miit-qualification-kb mount.'
+Assert-Contains $changelog 'miit-qualification-kb' 'CHANGELOG must document the MIIT mount.'
+Assert-True (-not $skill.Contains('工信部企业〔2022〕63号')) 'Private MIIT policy full texts must not be vendored into SKILL.md.'
+Assert-True (-not $kbMount.Contains('各省、自治区、直辖市及计划单列市、新疆生产建设兵团工业和信息化主管部门')) 'kb-mount must not embed private policy body text.'
 
 Write-Output 'PASS: business-genius-kakadong contract'

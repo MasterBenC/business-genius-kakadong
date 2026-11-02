@@ -42,10 +42,14 @@ business-genius-kakadong
 
 本 Skill 的问题消解和商业检验思路受到 [dontbesilent2025/dbskill](https://github.com/dontbesilent2025/dbskill) 启发，但本 Skill 不是官方产品。公开免费使用时请保留来源说明。上游项目采用 `CC BY-NC 4.0`；未经作者另行授权，本 Skill 不用于收费、商业化或捆绑收费咨询。
 
+## 工信认定知识库（可选）
+
+触及高新 / 专精特新 / 小巨人 / 单项冠军 / 行业领军时，按 `references/kb-mount.md` 挂载私有 [`miit-qualification-kb`](https://github.com/MasterBenC/miit-qualification-kb)（环境变量 `MIIT_QUALIFICATION_KB_ROOT` 或 sibling `../miit-qualification-kb`）。私库正文**不**打进本 Skill；未挂载时仍可体检，认定相关主张标 `needs_verification` / `to-validate`。行业领军国家级办法在库内为 `PENDING`，不得当有效文件引用。
+
 ## 目录
 
 - `SKILL.md`：完整工作流、判断规则和报告模板
 - `examples/`：四条分支的脱敏输入与输出示例
 - `evals/cases.json`：四条体检分支的契约评测数据
 - `evals/bp-cases.json`：六类投资人 BP 行为评测
-- `references/`：人格与投资人 BP 工作流
+- `references/`：人格、投资人 BP 工作流、以及 `kb-mount.md`（工信认定私库挂载）

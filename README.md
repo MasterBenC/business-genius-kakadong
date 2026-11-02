@@ -84,6 +84,10 @@
 
 它不会把“不知道”伪装成答案，也不会在收入、复购、成本或留存缺失时替你补数字。遇到数据冲突，会先暂停判断；遇到虚假材料、欺诈或规避监管请求，会停止提供优化建议。
 
+## 工信认定证据（可选）
+
+商业体检可以把高新、专精特新、小巨人、单项冠军等当作**证据维度**，而不是分数。宿主若挂载私有 [`miit-qualification-kb`](https://github.com/MasterBenC/miit-qualification-kb)（见 Skill 内 `references/kb-mount.md`），卡卡东会优先对照库内办法与主体档案；私库不随公开包分发。未挂载时照常体检，资格主张保持待验证。
+
 ## 快速开始
 
 将 [`skills/business-genius-kakadong`](skills/business-genius-kakadong) 安装到支持 Skills 的 Agent，然后调用：
